@@ -1,0 +1,69 @@
+<h1>Listing tasks</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Tasks</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td>
+          <span class="has-tooltip" data-toggle="tooltip" title="<%= "Created on #{task.created_at.strftime("%m/%e/%Y at %w:%M %p")}, Last modified on #{task.updated_at.strftime("%m/%e/%Y at %w:%M %p")}" %>">
+            <%= task.title %>
+          </span>
+        </td>
+        <td>
+          <% if task.content? %>
+    <!-- Button trigger modal -->
+            <button class="btn btn-link" data-toggle="modal" data-target="#task-<%= task.id %>-tasks">
+              View Content
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="task-<%= task.id %>-tasks" tabindex="-1" role="dialog" aria-labelledby="task-<%= task.id %>-label" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="task-<%= task.id %>-label">Content</h4>
+                  </div>
+                  <div class="modal-body">
+                    <%= task.content %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </td>
+        <td>
+          <% if task.content? %>
+            <button type="button" class="btn btn-link has-popover" data-toggle="popover" title="Content" 
+              data-content="<%= task.content %>">View Content (popover)</button>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', task, class: 'btn btn-primary btn-xs' %></td>
+        <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-info btn-xs' %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %><td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path, class: 'btn btn-success' %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.has-tooltip').tooltip();
+    $('.has-popover').popover({
+      trigger: 'hover'
+    });
+  });
+</script>

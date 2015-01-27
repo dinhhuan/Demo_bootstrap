@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+<table class="table">
+  <tr>
+  	<td>Title:</td>
+  	<td><%= @task.title %></td>
+  </tr>
+  <tr>
+  	<td>Content:</td>
+  	<td><%= @task.content %></td>
+  </tr>
+  <tr>
+  	<td><%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-info btn-xs' %>
+  	  | <%= link_to 'Back', tasks_path, class: 'btn btn-primary btn-xs' %></td>
+  </tr>
+</table>
